@@ -19,6 +19,7 @@ def set_difficulty():
   else:
     return set_difficulty()
 
+#difficulty parameters
 def get_word(difficulty):
   random_word = ""
   with open('words.txt') as file:
@@ -52,11 +53,12 @@ def game_play(random_word):
   game_over = False
   print(" ".join(blanks))
   while game_over == False:
-    print(random_word)
     guesses_left = 8 - guesses
     print(f"You have {guesses_left} guesses left...")
     user_guess = input('Guess a letter! ')
     print(user_guess)
+    if len(user_guess) != 1:
+      print(f"Guess only 1 letter.")
     if user_guess in random_word:
       print('Correct')
       for index in range(len(random_word)):
@@ -68,9 +70,11 @@ def game_play(random_word):
         print(f"You guessed it! The word was {random_word}. It took you {guesses} guess(es).")
       elif guesses == 8:
         game_over = True
-        print(f"You lose.")
+        print(f"You lose. The word was {random_word}")
     else:
       print('Nope')
+      if user_guess in wrong_letters:
+        print(f"You already guessed that letter. Guess again.")
       wrong_letters.append(user_guess)
       print(wrong_letters)
       guesses += 1
